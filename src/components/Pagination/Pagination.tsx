@@ -32,7 +32,7 @@ const Pagination: FC<PaginationProp> = ({
   ) => {
     e.preventDefault();
     const page = Number(e.currentTarget.getAttribute("data-page"));
-    page && switchPage(page - 1);
+    page && switchPage(page);
   };
 
   return (

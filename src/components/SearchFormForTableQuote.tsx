@@ -1,6 +1,6 @@
 import { useAppDispatch } from "../hooks/reduxHooks";
 import { setSearchValue } from "../store/slices/quotesSlice";
-import { SearchForm } from "./Search/SearchForm";
+import { SearchForm } from "./shared/Search/SearchForm";
 
 export const SearchFormForTableQuote = () => {
   const dispatch = useAppDispatch();

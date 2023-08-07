@@ -106,6 +106,7 @@ const quotesSlice = createSlice({
     builder
       .addCase(fetchQuotes.pending, (state) => {
         state.status.isLoading = true;
+        state.status.isError = null;
       })
       .addCase(
         fetchQuotes.fulfilled,

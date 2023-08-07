@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import { useAppDispatch } from "./reduxHooks";
 
 const useSearch = (
   array: any[],

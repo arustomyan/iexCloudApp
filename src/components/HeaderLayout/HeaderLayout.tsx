@@ -1,6 +1,6 @@
 import { useAppDispatch } from "../../hooks/reduxHooks";
 import { removeToken } from "../../store/slices/authSlice";
-import { Button } from "../Button/Button";
+import { Button } from "../shared/Button/Button";
 import styles from "./HeaderLayout.module.css";
 
 export const HeaderLayout = () => {

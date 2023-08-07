@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { TokenForm } from "./TokenForm/TokenForm";
+import { TokenForm } from "./shared/TokenForm/TokenForm";
 import { addToken } from "../store/slices/authSlice";
 
 export const AuthTokenForm = () => {

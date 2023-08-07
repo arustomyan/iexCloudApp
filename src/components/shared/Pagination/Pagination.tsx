@@ -2,7 +2,7 @@ import { FC, useEffect, useRef, useState } from "react";
 import styles from "./Pagination.module.css";
 import cl from "classnames";
 import { Button } from "../Button/Button";
-import { generateArray } from "../../utils/generateArray";
+import { generateArray } from "../../../utils/generateArray";
 
 interface PaginationProp {
   countPages: number;

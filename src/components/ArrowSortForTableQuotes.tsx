@@ -1,5 +1,5 @@
 import { useAppSelector } from "../hooks/reduxHooks";
-import ArrowSort from "./ArrowSort/ArrowSort";
+import ArrowSort from "./shared/ArrowSort/ArrowSort";
 import { FC } from "react";
 
 export const ArrowSortForTableQuotes: FC<{ titleColumn: string }> = ({

@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks";
-import Pagination from "./Pagination/Pagination";
+import Pagination from "./shared/Pagination/Pagination";
 import { goToPage, nextPage, prevPage } from "../store/slices/quotesSlice";
 
 export const PaginationForTableQuotes = () => {

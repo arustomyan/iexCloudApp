@@ -3,9 +3,13 @@ import style from "./SearchForm.module.css";
 
 interface SearchFormProp {
   onSubmit: (value: string) => void;
+  placeholder?: string;
 }
 
-const SearchForm: FC<SearchFormProp> = ({ onSubmit }) => {
+const SearchForm: FC<SearchFormProp> = ({
+  onSubmit,
+  placeholder = "search...",
+}) => {
   const [value, setValue] = useState("");
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -22,7 +26,7 @@ const SearchForm: FC<SearchFormProp> = ({ onSubmit }) => {
       <input
         type="text"
         name="search"
-        placeholder={"search..."}
+        placeholder={placeholder}
         className={style.input}
         value={value}
         onChange={handleChange}

@@ -8,5 +8,7 @@ export const SearchFormForTableQuote = () => {
     dispatch(setSearchValue(value));
   };
 
-  return <SearchForm onSubmit={handleSubmit} />;
+  return (
+    <SearchForm onSubmit={handleSubmit} placeholder="search by symbol..." />
+  );
 };

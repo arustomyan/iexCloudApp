@@ -93,7 +93,8 @@ const quotesSlice = createSlice({
       }
     },
     setCountPages: ({ pagination }, action: PayloadAction<number>) => {
-      pagination.countPages = Math.ceil(action.payload / pagination.limit) - 1;
+      const countPages = Math.ceil(action.payload / pagination.limit);
+      pagination.countPages = countPages === 0 ? 0 : countPages - 1;
     },
   },
   extraReducers: (builder) => {

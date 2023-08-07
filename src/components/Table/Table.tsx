@@ -1,19 +1,20 @@
 import { useCallback, useEffect, useMemo } from "react";
 import cl from "classnames";
-import Row from "./Row";
-import Pagination from "../Pagination/Pagination";
 import { dataQuotes } from "../../model/model";
-import { useFetching } from "../../hooks/useFetching";
 import useSorted from "../../hooks/useSorted";
 import useSearch from "../../hooks/useSearch";
-import usePagination from "../../hooks/usePagination";
 import { THeadMemo } from "./THead";
-import { getQuotes } from "../../api/getQuotes";
 import styles from "./Table.module.css";
+import {
+  fetchQuotes,
+  setCountPages,
+  switchSorting,
+} from "../../store/slices/quotesSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import usePagination from "../../hooks/usePagination";
+import Row from "./Row";
 
-interface TableProp {
-  searchValue: string;
-}
+interface TableProp {}
 
 const tHeadData: [string, string][] = [
   ["symbol", "symbol"],
@@ -23,61 +24,45 @@ const tHeadData: [string, string][] = [
   ["askSize", "askSize"],
 ];
 
-const Table: React.FC<TableProp> = ({ searchValue }) => {
-  const [sortedData, switchSort, sortingInfo] = useSorted<dataQuotes[]>(
-    [],
-    "symbol",
-    "asc"
-  );
-  const [filteredData] = useSearch(sortedData, searchValue, ["symbol"]);
-  const [viewArray, switchPage, paginationInfo] = usePagination(
-    0,
-    10,
-    filteredData
-  );
+const Table: React.FC<TableProp> = () => {
+  const dispatch = useAppDispatch();
 
-  const [fetchSearchBeer, isLoading, error] = useFetching(async () => {
-    await getQuotes({ token: import.meta.env.VITE_API_TOKEN }).then((res) => {
-      switchSort(res, "symbol", "asc");
-    });
-  });
+  const quotes = useAppSelector(({ quotes }) => quotes.data);
+  const { column, direction } = useAppSelector(({ quotes }) => quotes.sorted);
+  const searchValue = useAppSelector(({ quotes }) => quotes.searchValue);
 
+  const sortedData = useSorted<dataQuotes[]>(quotes, column, direction);
+  const filteredData = useSearch(sortedData, searchValue, ["symbol"]);
+  const viewData = usePagination(filteredData);
+
+  // Оставляю эту функцию здесь, потому что переключение сортировки вызовет ререндер всей таблицы
   const handleSort: React.MouseEventHandler<HTMLTableCellElement> = useCallback(
     (e) => {
       const sortableProperty = e.currentTarget.getAttribute("data-name");
-      if (sortableProperty) switchSort(sortedData, sortableProperty);
+      if (sortableProperty) {
+        dispatch(switchSorting({ column: sortableProperty }));
+      }
     },
-    [sortedData]
+    []
   );
 
   useEffect(() => {
-    fetchSearchBeer();
-  }, []);
+    dispatch(setCountPages(filteredData.length));
+  }, [filteredData.length]);
 
   useEffect(() => {
-    switchPage.goTo(0);
-  }, [searchValue]);
-
-  if (error != "") {
-    return <span>Ошибка: {error}</span>;
-  }
+    dispatch(fetchQuotes({ token: import.meta.env.VITE_API_TOKEN }));
+  }, []);
 
   return (
     <>
       <TableUI
         tHeadData={tHeadData}
-        data={viewArray}
-        typeSorting={sortingInfo.type}
-        sortedColumn={sortingInfo.property}
+        data={viewData}
+        typeSorting={"asc"}
+        sortedColumn={"sortingInfo.property"}
         handleSort={handleSort}
-        isLoading={isLoading}
-      />
-      <Pagination
-        countPages={paginationInfo.countPages}
-        activePage={paginationInfo.activePage}
-        handlePrevPage={switchPage.prev}
-        handleNextPage={switchPage.next}
-        switchPage={switchPage.goTo}
+        isLoading={false}
       />
     </>
   );

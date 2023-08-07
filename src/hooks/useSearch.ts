@@ -1,11 +1,13 @@
 import { useMemo } from "react";
+import { useAppDispatch } from "./reduxHooks";
 
 const useSearch = (
   array: any[],
   value: string,
   arrayColumns: string[]
-): [any[]] => {
+): any[] => {
   const filteredArray = useMemo(() => {
+    if (value === "") return array;
     return array.filter((item) => {
       for (let i = 0; i < arrayColumns.length; i++) {
         const columnValue = item[arrayColumns[i]].toString().toLowerCase();
@@ -15,7 +17,7 @@ const useSearch = (
     });
   }, [array, value]);
 
-  return [filteredArray];
+  return filteredArray;
 };
 
 export default useSearch;

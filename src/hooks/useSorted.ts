@@ -1,82 +1,38 @@
-import { useCallback, useMemo, useState } from "react";
+import { useMemo } from "react";
 
-type typeSorted = "asc" | "desc";
+type typeSorted = "asc" | "desc" | null;
 
 type DataObject = {
   [key: string]: number | string;
 };
 
-type HookReturnValue<T> = [
-  T,
-  switchSortingType<T>,
-  {
-    property: string;
-    type: string;
-  }
-];
-
-type switchSortingType<T> = (
-  array: T,
-  sortableProperty?: string,
-  sortableType?: typeSorted
-) => void;
-
 const useSorted = <T extends DataObject[]>(
   array: T,
-  initialSortableProperty: string,
-  initialSortableType: typeSorted
-): HookReturnValue<T> => {
-  const [sortedArray, setSortedArray] = useState<T>(array);
-  const [saveSortableProperty, setSaveSortableProperty] = useState(
-    String(initialSortableProperty)
-  );
-  const [savedSortableType, setSavedSortableType] =
-    useState<typeSorted>(initialSortableType);
+  sortableProperty: string | null,
+  sortableType: typeSorted
+): T => {
+  const sortedArray = useMemo(() => {
+    if (!sortableProperty || !sortableType || array.length === 0) return array;
 
-  const switchSortingType: switchSortingType<T> = useCallback(
-    (array, sortableProperty = initialSortableProperty, sortableType) => {
-      if (array.length === 0) return;
+    const resultArray = array.concat();
 
-      const resultArray = array.concat();
+    const isStringProperty =
+      typeof resultArray[0][sortableProperty] === "string";
 
-      const isPrevProperty = saveSortableProperty === sortableProperty;
-      if (!isPrevProperty) setSaveSortableProperty(sortableProperty);
+    if (isStringProperty) {
+      resultArray.sort((a, b) =>
+        sortStrings(a, b, sortableProperty, sortableType)
+      );
+    } else {
+      resultArray.sort((a, b) =>
+        sortNumbers(a, b, sortableProperty, sortableType)
+      );
+    }
 
-      if (sortableType === undefined) {
-        const typeSorted = savedSortableType === "asc" ? "desc" : "asc";
-        setSavedSortableType(typeSorted);
-      } else {
-        setSavedSortableType(sortableType);
-      }
+    return resultArray;
+  }, [sortableProperty, sortableType, array]);
 
-      const isStringProperty =
-        typeof resultArray[0][sortableProperty] === "string";
-
-      if (isStringProperty) {
-        resultArray.sort((a, b) =>
-          sortStrings(a, b, sortableProperty, savedSortableType)
-        );
-      } else {
-        resultArray.sort((a, b) =>
-          sortNumbers(a, b, sortableProperty, savedSortableType)
-        );
-      }
-
-      setSortedArray(resultArray as T);
-    },
-    [savedSortableType, sortedArray]
-  );
-
-  useMemo(() => {
-    switchSortingType(array, initialSortableProperty, "asc");
-  }, [array]);
-
-  const sortingInfo = {
-    property: saveSortableProperty,
-    type: savedSortableType,
-  };
-
-  return [sortedArray, switchSortingType, sortingInfo];
+  return sortedArray as T;
 };
 
 export default useSorted;

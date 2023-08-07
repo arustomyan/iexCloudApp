@@ -26,14 +26,12 @@ const tHeadData: [string, string][] = [
 
 const Table: React.FC<TableProp> = () => {
   const dispatch = useAppDispatch();
-
   const quotes = useAppSelector(({ quotes }) => quotes.data);
   const { column, direction } = useAppSelector(({ quotes }) => quotes.sorted);
   const searchValue = useAppSelector(({ quotes }) => quotes.searchValue);
-
-  const sortedData = useSorted<dataQuotes[]>(quotes, column, direction);
-  const filteredData = useSearch(sortedData, searchValue, ["symbol"]);
-  const viewData = usePagination(filteredData);
+  const filteredData = useSearch(quotes, searchValue, ["symbol"]);
+  const sortedData = useSorted<dataQuotes[]>(filteredData, column, direction);
+  const viewData = usePagination(sortedData);
 
   // Оставляю эту функцию здесь, потому что переключение сортировки вызовет ререндер всей таблицы
   const handleSort: React.MouseEventHandler<HTMLTableCellElement> = useCallback(
@@ -59,8 +57,6 @@ const Table: React.FC<TableProp> = () => {
       <TableUI
         tHeadData={tHeadData}
         data={viewData}
-        typeSorting={"asc"}
-        sortedColumn={"sortingInfo.property"}
         handleSort={handleSort}
         isLoading={false}
       />
@@ -71,8 +67,6 @@ const Table: React.FC<TableProp> = () => {
 interface TableUIProp {
   tHeadData: [string, string][];
   data: dataQuotes[];
-  typeSorting: string;
-  sortedColumn: string;
   handleSort?: React.MouseEventHandler<HTMLTableCellElement>;
   isLoading: boolean;
 }
@@ -80,8 +74,6 @@ interface TableUIProp {
 const TableUI: React.FC<TableUIProp> = ({
   tHeadData,
   data,
-  typeSorting,
-  sortedColumn,
   handleSort,
   isLoading,
 }) => {
@@ -92,12 +84,7 @@ const TableUI: React.FC<TableUIProp> = ({
   return (
     <>
       <table className={cl(styles.root)}>
-        <THeadMemo
-          tHeadData={tHeadData}
-          typeSorting={typeSorting}
-          sortedColumn={sortedColumn}
-          handleSort={handleSort}
-        />
+        <THeadMemo tHeadData={tHeadData} handleSort={handleSort} />
         <tbody>
           {!isLoading &&
             data.map((dataRow) => {

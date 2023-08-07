@@ -2,13 +2,13 @@ import styles from "./ArrowSort.module.css";
 import cl from "classnames";
 
 interface ArrowSortProps {
-  sortedType: string;
+  sortedType: string | null;
   isActive?: boolean;
 }
 
 const ArrowSort: React.FC<ArrowSortProps> = ({ sortedType, isActive }) => {
   let mod = "";
-  if (!isActive) {
+  if (!isActive && !!sortedType) {
     mod = "";
     setTimeout(() => (mod = styles._notActive), 250);
   } else {

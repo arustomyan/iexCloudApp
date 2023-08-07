@@ -1,21 +1,14 @@
 import React from "react";
 import styles from "./THead.module.css";
 import cl from "classnames";
-import ArrowSort from "../ArrowSort/ArrowSort";
+import { ArrowSortForTableQuotes } from "../ArrowSortForTableQuotes";
 
 interface TableProps {
   tHeadData: [string, string][];
-  typeSorting: string;
-  sortedColumn: string;
   handleSort?: React.MouseEventHandler<HTMLTableCellElement>;
 }
 
-const THead: React.FC<TableProps> = ({
-  tHeadData,
-  typeSorting,
-  sortedColumn,
-  handleSort,
-}) => {
+const THead: React.FC<TableProps> = ({ tHeadData, handleSort }) => {
   return (
     <>
       <thead>
@@ -25,10 +18,7 @@ const THead: React.FC<TableProps> = ({
               <th data-name={column[0]} onClick={handleSort} key={column[0]}>
                 <div className={cl(styles.titleBlock)}>
                   <span>{column[1]}</span>
-                  <ArrowSort
-                    sortedType={typeSorting}
-                    isActive={sortedColumn === column[0]}
-                  />
+                  <ArrowSortForTableQuotes titleColumn={column[0]} />
                 </div>
               </th>
             );

@@ -84,7 +84,12 @@ const quotesSlice = createSlice({
       state.searchValue = action.payload;
       state.pagination.currentPage = 0;
     },
-    switchSorting: ({ sorted }, action: PayloadAction<{ column: string }>) => {
+    switchSorting: (
+      { sorted, pagination },
+      action: PayloadAction<{ column: string }>
+    ) => {
+      pagination.currentPage = 0;
+
       if (sorted.column !== action.payload.column) {
         sorted.column = action.payload.column;
         sorted.direction = generateSortedDirection(true);

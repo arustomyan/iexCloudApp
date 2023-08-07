@@ -3,7 +3,7 @@ import { useMemo } from "react";
 type typeSorted = "asc" | "desc" | null;
 
 type DataObject = {
-  [key: string]: number | string;
+  [key: string]: number | string | Date;
 };
 
 const useSorted = <T extends DataObject[]>(
@@ -38,12 +38,8 @@ const useSorted = <T extends DataObject[]>(
 export default useSorted;
 
 function sortStrings(
-  a: {
-    [key: string]: string | number;
-  },
-  b: {
-    [key: string]: string | number;
-  },
+  a: DataObject,
+  b: DataObject,
   sortableProperty: string,
   typeSorted: typeSorted
 ) {
@@ -62,12 +58,8 @@ function sortStrings(
 }
 
 function sortNumbers(
-  a: {
-    [key: string]: string | number;
-  },
-  b: {
-    [key: string]: string | number;
-  },
+  a: DataObject,
+  b: DataObject,
   sortableProperty: string,
   typeSorted: typeSorted
 ) {

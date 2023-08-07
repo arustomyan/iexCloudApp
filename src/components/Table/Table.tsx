@@ -21,7 +21,8 @@ const tHeadData: [string, string][] = [
   ["sector", "sector"],
   ["lastSalePrice", "lastSalePrice"],
   ["askPrice", "askPrice"],
-  ["askSize", "askSize"],
+  ["lastSaleTime", "lastSaleTime"],
+  ["lastUpdated", "lastUpdated"],
 ];
 
 const Table: React.FC<TableProp> = () => {
@@ -93,6 +94,7 @@ const TableUI: React.FC<TableUIProp> = ({
                   data={dataRow}
                   titlesColumn={titleColumns}
                   key={dataRow.symbol}
+                  DateColumn={["lastSaleTime", "lastUpdated"]}
                 />
               );
             })}

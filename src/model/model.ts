@@ -5,8 +5,8 @@ export type dataQuotes = {
   bidSize: number;
   lastSalePrice: number;
   lastSaleSize: number;
-  // lastSaleTime: Date;
-  // lastUpdated: Date;
+  lastSaleTime: Date;
+  lastUpdated: Date;
   sector: string;
   securityType: string;
   symbol: string;

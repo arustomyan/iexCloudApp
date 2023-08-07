@@ -13,6 +13,7 @@ import {
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import usePagination from "../../hooks/usePagination";
 import Row from "./Row";
+import { generateArray } from "../../utils/generateArray";
 
 interface TableProp {}
 
@@ -28,6 +29,7 @@ const tHeadData: [string, string][] = [
 const Table: React.FC<TableProp> = () => {
   const dispatch = useAppDispatch();
   const quotes = useAppSelector(({ quotes }) => quotes.data);
+  const { isLoading } = useAppSelector(({ quotes }) => quotes.status);
   const token = useAppSelector(({ auth }) => auth.token);
   const { column, direction } = useAppSelector(({ quotes }) => quotes.sorted);
   const searchValue = useAppSelector(({ quotes }) => quotes.searchValue);
@@ -60,7 +62,7 @@ const Table: React.FC<TableProp> = () => {
         tHeadData={tHeadData}
         data={viewData}
         handleSort={handleSort}
-        isLoading={false}
+        isLoading={isLoading}
       />
     </>
   );
@@ -88,17 +90,20 @@ const TableUI: React.FC<TableUIProp> = ({
       <table className={cl(styles.root)}>
         <THeadMemo tHeadData={tHeadData} handleSort={handleSort} />
         <tbody>
-          {!isLoading &&
-            data.map((dataRow) => {
-              return (
-                <Row
-                  data={dataRow}
-                  titlesColumn={titleColumns}
-                  key={dataRow.symbol}
-                  DateColumn={["lastSaleTime", "lastUpdated"]}
-                />
-              );
-            })}
+          {isLoading
+            ? generateArray(1, 10).map((el) => {
+                return <Row.Skeleton countColumn={tHeadData.length} key={el} />;
+              })
+            : data.map((dataRow) => {
+                return (
+                  <Row
+                    data={dataRow}
+                    titlesColumn={titleColumns}
+                    key={dataRow.symbol}
+                    DateColumn={["lastSaleTime", "lastUpdated"]}
+                  />
+                );
+              })}
         </tbody>
       </table>
     </>

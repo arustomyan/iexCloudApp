@@ -5,7 +5,7 @@ type initialState = {
 };
 
 const savedToken: string = !!localStorage.getItem("token")
-  ? String(localStorage.getItem("token"))
+  ? JSON.parse(String(localStorage.getItem("token")))
   : "";
 
 const initialState: initialState = {

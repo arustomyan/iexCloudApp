@@ -11,6 +11,8 @@ td {
 }
 
 
+.root tbody td {}
+
 
 .root tbody th {
     padding-top: 10px;

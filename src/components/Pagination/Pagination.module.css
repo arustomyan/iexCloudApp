@@ -1,0 +1,41 @@
+.root {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+}
+
+.list {
+    font-size: 18px;
+    font-style: italic;
+    font-weight: 700;
+    line-height: 137.687%;
+    display: flex;
+    gap: 1ch;
+    justify-content: center;
+    max-width: 70%;
+    overflow-x: auto;
+}
+
+
+.item {
+    transition: color 0.25 ease;
+}
+
+
+.item_active {
+    color: #7EBC3C;
+}
+
+.button {
+    color: #474955;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 137.687%;
+}
+
+
+.button_notActive {
+    color: #acacad;
+    ;
+}

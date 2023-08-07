@@ -1,0 +1,21 @@
+thead {
+    background: #474955;
+}
+
+.titleBlock {
+    padding: 20px 0;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    color: #fff;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+
+thead {
+    border: 1px solid #474955;
+
+}

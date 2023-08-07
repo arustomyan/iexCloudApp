@@ -1,0 +1,39 @@
+.root {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+    overflow-x: auto;
+}
+
+tbody,
+td {
+    border: 1px solid #E3E6EC;
+}
+
+
+
+.root tbody th {
+    padding-top: 10px;
+    padding-bottom: 18px;
+    padding-left: 11px;
+    padding-right: 11px;
+    width: min-content
+}
+
+.root tbody td {
+    padding-top: 10px;
+    padding-bottom: 18px;
+    padding-left: 11px;
+    padding-right: 11px;
+    position: relative;
+}
+
+
+
+.root tbody td:nth-child(1) {
+    vertical-align: center;
+    padding: 10px;
+    text-align: center;
+    min-width: min-content;
+
+}

@@ -1,27 +1,73 @@
-# React + TypeScript + Vite
+# iexCloudApp
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Live Demo - <.....>
 
-Currently, two official plugins are available:
+## Описание
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Это тестовое задание задачей которого было создать приложение, которое отображает отчеты о акциях на основе данных API IEX Cloud.
 
-## Expanding the ESLint configuration
+## Цели
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- [x] Нумерованная таблица в которой есть до 10 отчетов акций на странице
+- [x] Пользователь может переходить по страницам (next / prev)
+- [x] Иметь чистую структуру кода и продуманную архитектуру
+- [x] React
+- [x] Redux
+- [ ] Бонус #1: Модульные тесты (Unit Tests)
+- [ ] Бонус #2 Используя https://github.com/atlassian/react-beautiful-dnd чтобы перемещать строки в списке
 
-- Configure the top-level `parserOptions` property like this:
+## Установка и запуск
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+1. Клонируйте репозиторий:
+
+```
+git clone https://github.com/arustomyan/iexCloudApp.git
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+2. Установите необходимые зависимости
+
+```
+npm install
+```
+
+3. После установки всех зависимостей выполните:
+
+```
+npm run build
+```
+
+```
+npm run preview
+```
+
+## Cтруктура проекта
+
+- `src/components`: Cодержит компоненты используемые в приложении;
+- `src/components/shared`: Cодержит переиспользуемые компоненты без специальной логики;
+- `src/hooks/`: Cодержит хуки для приложения;
+- `src/model/`: Cодержит модель ожидаемых данных;
+- `src/utils/`: Содержит вспомогательные функции и утилиты.
+
+## Технологии
+
+- React
+- Redux-Toolkit
+- TypeScript
+
+## Дополнительный функционал не входящий в цели
+
+- [x] Пагинация по страницам
+- [x] Авторизация пользователя и сохранение/удаление токена в/из localStorage
+- [x] Cортировка данных таблицы по возрастанию и убыванию
+- [x] Поиск данных по колонке _symbol_
+
+## Автор
+
+### Арустомян Вячеслав:
+
+Telegram - <https://t.me/arustomyan>  
+Почта - <v.arustomyan@icloud.com>
+
+### Repository Link
+
+https://github.com/arustomyan/iexCloudApp.git

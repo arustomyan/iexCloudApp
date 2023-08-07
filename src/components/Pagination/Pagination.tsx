@@ -1,6 +1,7 @@
 import { FC, useEffect, useRef, useState } from "react";
 import styles from "./Pagination.module.css";
 import cl from "classnames";
+import { Button } from "../Button/Button";
 
 interface PaginationProp {
   countPages: number;
@@ -61,14 +62,14 @@ const Pagination: FC<PaginationProp> = ({
 
   return (
     <div className={cl(styles.root)}>
-      <button
+      <Button
         className={cl(styles.button, {
           [styles.button_notActive]: activePage === 0,
         })}
         onClick={handlePrevPage}
       >
         Назад
-      </button>
+      </Button>
       <div className={cl(styles.list)}>
         {arrayPages.map((page: string | number) => {
           if (typeof page === "number") {
@@ -77,7 +78,7 @@ const Pagination: FC<PaginationProp> = ({
                 className={cl(styles.item, {
                   [styles.item_active]: page === activePage,
                 })}
-                key={typeof page === "number" ? page : getUniqueKey()}
+                key={page}
                 data-page={page}
                 onClick={handleGoToPage}
                 type="button"
@@ -89,14 +90,14 @@ const Pagination: FC<PaginationProp> = ({
           return <span key={getUniqueKey()}>...</span>;
         })}
       </div>
-      <button
+      <Button
         onClick={handleNextPage}
         className={cl(styles.button, {
           [styles.button_notActive]: activePage === countPages,
         })}
       >
         Далее
-      </button>
+      </Button>
     </div>
   );
 };

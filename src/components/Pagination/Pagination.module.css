@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 40px;
+    padding: 15px;
 }
 
 .list {
@@ -24,20 +24,21 @@
 
 
 .item_active {
-    color: #7EBC3C;
+    color: rgb(120, 192, 255);
     font-size: 22px;
     font-weight: 600;
 }
 
-.button {
-    color: #474955;
-    font-size: 24px;
-    font-weight: 500;
-    line-height: 137.687%;
+button.button {
+    color: #353637;
+    max-width: fit-content;
 }
 
 
-.button_notActive {
-    color: #acacad;
-    ;
+.button.button_notActive {
+    background-color: aliceblue;
+}
+
+.button.button_notActive:hover {
+    box-shadow: none;
 }

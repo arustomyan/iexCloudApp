@@ -1,0 +1,19 @@
+.button {
+    background-color: rgb(120, 192, 255);
+    padding: 10px 15px;
+    width: 100%;
+    border-radius: 8px;
+    max-width: 400px;
+    font-size: 18px;
+    transition: box-shadow 0.25s ease;
+}
+
+.button:hover {
+    box-shadow: 5px 6px 19px rgba(120, 192, 255, 0.592), -5px -6px 10px rgba(120, 192, 255, 0.592);
+}
+
+
+.button:active {
+    transition: box-shadow 0.1s ease;
+    box-shadow: none
+}

@@ -1,0 +1,15 @@
+.root {
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.logo {
+    font-weight: 600;
+    font-size: 22px;
+}
+
+.button {
+    max-width: fit-content;
+}

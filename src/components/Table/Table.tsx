@@ -28,6 +28,7 @@ const tHeadData: [string, string][] = [
 const Table: React.FC<TableProp> = () => {
   const dispatch = useAppDispatch();
   const quotes = useAppSelector(({ quotes }) => quotes.data);
+  const token = useAppSelector(({ auth }) => auth.token);
   const { column, direction } = useAppSelector(({ quotes }) => quotes.sorted);
   const searchValue = useAppSelector(({ quotes }) => quotes.searchValue);
   const filteredData = useSearch(quotes, searchValue, ["symbol"]);
@@ -50,8 +51,8 @@ const Table: React.FC<TableProp> = () => {
   }, [filteredData.length]);
 
   useEffect(() => {
-    dispatch(fetchQuotes({ token: import.meta.env.VITE_API_TOKEN }));
-  }, []);
+    dispatch(fetchQuotes({ token }));
+  }, [token]);
 
   return (
     <>

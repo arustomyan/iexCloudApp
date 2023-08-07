@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import styles from "./Pagination.module.css";
 import cl from "classnames";
 
@@ -16,50 +16,77 @@ const Pagination: FC<PaginationProp> = ({
   handleNextPage,
   switchPage,
 }) => {
-  const [arrayPages, setArrayPages] = useState([0]);
+  const [arrayPages, setArrayPages] = useState<(number | string)[]>([0]);
+  const uniqueKeyCounterRef = useRef(0);
 
   useEffect(() => {
-    const array = [];
-    for (let i = 1; i <= countPages; i++) {
-      array.push(i);
-    }
+    const generatePagesArray = (start: number, end: number) =>
+      Array.from({ length: end - start + 1 }, (_, index) => start + index);
 
-    setArrayPages(array);
-  }, [countPages]);
+    const getPagesArray = () => {
+      if (countPages > 11) {
+        if (activePage <= 5) {
+          return [...generatePagesArray(0, 7), "...", countPages];
+        } else if (activePage + 4 >= countPages) {
+          return [1, "...", ...generatePagesArray(countPages - 6, countPages)];
+        } else {
+          return [
+            0,
+            "...",
+            ...generatePagesArray(activePage - 2, activePage + 2),
+            "...",
+            countPages,
+          ];
+        }
+      } else {
+        return generatePagesArray(0, countPages);
+      }
+    };
+
+    setArrayPages(getPagesArray());
+  }, [countPages, activePage]);
 
   const handleGoToPage = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
     const page = Number(e.currentTarget.getAttribute("data-page"));
-    page && switchPage(page);
+    typeof page === "number" && switchPage(page);
+  };
+
+  const getUniqueKey = () => {
+    uniqueKeyCounterRef.current += 1;
+    return uniqueKeyCounterRef.current.toString() + "key";
   };
 
   return (
     <div className={cl(styles.root)}>
       <button
         className={cl(styles.button, {
-          [styles.button_notActive]: activePage === 1,
+          [styles.button_notActive]: activePage === 0,
         })}
         onClick={handlePrevPage}
       >
         Назад
       </button>
       <div className={cl(styles.list)}>
-        {arrayPages.map((i) => {
-          return (
-            <button
-              className={cl(styles.item, {
-                [styles.item_active]: i === activePage,
-              })}
-              key={i}
-              data-page={i}
-              onClick={handleGoToPage}
-              type="button"
-            >
-              {i}
-            </button>
-          );
+        {arrayPages.map((page: string | number) => {
+          if (typeof page === "number") {
+            return (
+              <button
+                className={cl(styles.item, {
+                  [styles.item_active]: page === activePage,
+                })}
+                key={typeof page === "number" ? page : getUniqueKey()}
+                data-page={page}
+                onClick={handleGoToPage}
+                type="button"
+              >
+                {page + 1}
+              </button>
+            );
+          }
+          return <span key={getUniqueKey()}>...</span>;
         })}
       </div>
       <button

@@ -19,12 +19,14 @@
 
 
 .item {
-    transition: color 0.25 ease;
+    transition: color 0.25 ease, font-size 0.25 ease
 }
 
 
 .item_active {
     color: #7EBC3C;
+    font-size: 22px;
+    font-weight: 600;
 }
 
 .button {

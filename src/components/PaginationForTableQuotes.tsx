@@ -7,12 +7,16 @@ export const PaginationForTableQuotes = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <Pagination
-      countPages={pagination.countPages}
-      activePage={pagination.currentPage}
-      handlePrevPage={() => dispatch(prevPage())}
-      handleNextPage={() => dispatch(nextPage())}
-      switchPage={(page) => dispatch(goToPage(page))}
-    />
+    <>
+      {Boolean(pagination.countPages) && (
+        <Pagination
+          countPages={pagination.countPages}
+          activePage={pagination.currentPage}
+          handlePrevPage={() => dispatch(prevPage())}
+          handleNextPage={() => dispatch(nextPage())}
+          switchPage={(page) => dispatch(goToPage(page))}
+        />
+      )}
+    </>
   );
 };
